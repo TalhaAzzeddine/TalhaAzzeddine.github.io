@@ -1,664 +1,325 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0e012d">
-  <meta name="description" content="Azzeddine Talha is a Lead Unity Developer building games and interactive experiences across mobile, PC, WebGL, multiplayer, and XR.">
-  <meta property="og:title" content="Azzeddine Talha — Lead Unity Developer">
-  <meta property="og:description" content="Games, gameplay systems, tools, shaders, VFX, and interactive worlds made with Unity and C#.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://azzeddine-talha.me/">
-  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
-  <meta property="og:image" content="https://azzeddine-talha.me/assets/images/site-icon-512.png">
-  <title>Azzeddine Talha — Lead Unity Developer</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0e012d;
-      --bg-raised: #120632;
-      --surface: #160b38;
-      --surface-raised: #201046;
-      --ink: #faf8ff;
-      --muted: #c0b8da;
-      --subtle: #9184b8;
-      --line: rgba(159, 117, 255, .20);
-      --blue: #5b62ff;
-      --blue-strong: #6f18ff;
-      --blue-soft: rgba(105, 29, 255, .16);
-      --radius: 22px;
-      --shadow: 0 24px 70px rgba(0, 0, 0, .25);
-      --max: 1180px;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 96px; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse at 14% 8%, rgba(104, 0, 255, .25), transparent 34rem),
-        radial-gradient(ellipse at 88% 30%, rgba(61, 34, 255, .18), transparent 34rem),
-        radial-gradient(ellipse at 50% 95%, rgba(24, 31, 255, .07), transparent 40rem),
-        var(--bg);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    a { color: inherit; text-decoration: none; }
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-    img { display: block; max-width: 100%; }
-    button { font: inherit; }
-    .container { width: min(var(--max), calc(100% - 48px)); margin-inline: auto; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hi, Welcome to my website, I'm Azzeddine Talha a game dev & 3d designer">
+    <meta property="og:title" content="How to set GitHub credentials for macOS">
+    <meta property="og:url" content="https://azzeddine-talha.me/">
+    <meta property="og:image" content="https://azzeddine-talha.me/imgs/Azzeddine Talha Profile" />
+    <title>Azzeddine Talha</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+                publicKey: "21qeIGGLQgG39E8o9",
+            });
+        })();
+    </script>
+    <link rel="icon" type="image/x-icon" href="imgs/Azzeddine Talha Profile.png">
 
-    /* First-load experience */
-    body.is-loading { overflow: hidden; }
-    .site-header, main, .footer { opacity: 1; transition: opacity .72s ease; }
-    body.is-loading .site-header, body.is-loading main, body.is-loading .footer { opacity: 0; pointer-events: none; }
-    .site-loader {
-      position: fixed; inset: 0; z-index: 9999; display: grid; place-items: center; overflow: hidden;
-      color: var(--ink); background:
-        radial-gradient(ellipse at 70% 16%, rgba(126, 0, 255, .32), transparent 42%),
-        radial-gradient(ellipse at 23% 78%, rgba(25, 38, 255, .23), transparent 44%), #080018;
-      opacity: 1; visibility: visible; transition: opacity .68s ease, visibility .68s ease;
-      isolation: isolate;
-    }
-    .site-loader::before {
-      content: ""; position: absolute; width: min(84vmin, 760px); aspect-ratio: 1; border-radius: 50%;
-      background: conic-gradient(from 0deg, transparent 0 13%, rgba(87, 38, 255, .35) 20%, transparent 33%, rgba(154, 24, 255, .35) 48%, transparent 62%, rgba(32, 63, 255, .30) 78%, transparent 92%);
-      filter: blur(58px); opacity: .75; animation: loader-drift 10s linear infinite;
-      z-index: -1;
-    }
-    .site-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-    .loader-content { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 24px; }
-    .loader-orbit {
-      position: relative; width: 72px; height: 72px; margin-bottom: 28px; border-radius: 50%;
-      border: 1px solid rgba(183, 160, 255, .23); box-shadow: 0 0 46px rgba(106, 25, 255, .22);
-      animation: loader-pulse 2.2s ease-in-out infinite;
-    }
-    .loader-orbit::before, .loader-orbit::after { content: ""; position: absolute; border-radius: 50%; }
-    .loader-orbit::before {
-      inset: 7px; border: 2px solid transparent; border-top-color: #9b52ff; border-right-color: #4f63ff;
-      animation: loader-spin 1.15s linear infinite;
-    }
-    .loader-orbit::after {
-      width: 9px; height: 9px; top: -4px; left: calc(50% - 4px);
-      background: #fff; box-shadow: 0 0 13px #8b4dff, 0 0 28px #532dff;
-    }
-    .loader-name { margin: 0; font-size: clamp(1.5rem, 4.5vw, 2.25rem); font-weight: 850; letter-spacing: -.055em; }
-    .loader-name span {
-      background: linear-gradient(100deg, #fff 0%, #9297ff 30%, #be72ff 54%, #6874ff 78%, #fff 100%);
-      background-size: 230% auto; color: transparent; -webkit-background-clip: text; background-clip: text;
-      animation: loader-text-shimmer 3s ease-in-out infinite;
-    }
-    .loader-status { margin: 12px 0 24px; color: #b8afd7; font-size: .7rem; font-weight: 800; letter-spacing: .22em; }
-    .loader-dots { display: inline-block; width: 19px; text-align: left; color: #b685ff; }
-    .loader-dots::after { content: ""; animation: loader-dots 1.2s steps(4, end) infinite; }
-    .loader-track { width: min(240px, 66vw); height: 3px; overflow: hidden; border-radius: 99px; background: rgba(172, 147, 255, .18); }
-    .loader-track span {
-      display: block; width: 36%; height: 100%; border-radius: inherit;
-      background: linear-gradient(90deg, #342fff, #9b35ff, #d5b1ff);
-      box-shadow: 0 0 15px rgba(132, 56, 255, .8); animation: loader-progress 1.45s cubic-bezier(.7, 0, .3, 1) infinite;
-    }
-    @keyframes loader-spin { to { transform: rotate(360deg); } }
-    @keyframes loader-drift { to { transform: rotate(360deg); } }
-    @keyframes loader-pulse { 0%, 100% { transform: scale(.97); opacity: .8; } 50% { transform: scale(1.04); opacity: 1; } }
-    @keyframes loader-text-shimmer { 0%, 100% { background-position: 0% center; } 50% { background-position: 100% center; } }
-    @keyframes loader-dots { 0% { content: ""; } 25% { content: "."; } 50% { content: ".."; } 75%, 100% { content: "..."; } }
-    @keyframes loader-progress { 0% { transform: translateX(-130%); } 100% { transform: translateX(300%); } }
 
-    /* Gentle reveal animations on the landing page */
-    .motion-ready .reveal { opacity: 0; transform: translate3d(0, 23px, 0); transition: opacity .72s ease, transform .72s cubic-bezier(.2,.7,.2,1); }
-    .motion-ready .reveal.reveal-left { transform: translate3d(-22px, 0, 0); }
-    .motion-ready .reveal.reveal-right { transform: translate3d(22px, 0, 0); }
-    .motion-ready .reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
-    .motion-ready .game-card.reveal.is-visible:hover, .motion-ready .game-card.reveal.is-visible:focus-within { transform: translateY(-5px); }
-    .motion-ready .game-card:nth-child(2) { transition-delay: .07s; }
-    .motion-ready .game-card:nth-child(3) { transition-delay: .14s; }
-    .motion-ready .game-card:nth-child(4) { transition-delay: .21s; }
-    .motion-ready .game-card:nth-child(5) { transition-delay: .28s; }
-    .motion-ready .game-card:nth-child(6) { transition-delay: .35s; }
-    .portrait-frame { animation: portrait-aura 6s ease-in-out infinite alternate; }
-    @keyframes portrait-aura { from { box-shadow: 0 20px 60px rgba(70, 26, 255, .15); border-color: rgba(123, 68, 255, .32); } to { box-shadow: 0 24px 68px rgba(136, 28, 255, .25); border-color: rgba(155, 103, 255, .65); } }
-    @media (prefers-reduced-motion: reduce) {
-      .site-loader::before, .loader-orbit, .loader-orbit::before, .loader-name span, .loader-dots::after, .loader-track span, .portrait-frame { animation: none !important; }
-      .motion-ready .reveal, .motion-ready .reveal.reveal-left, .motion-ready .reveal.reveal-right { opacity: 1; transform: none; transition: none; }
-      .site-loader { transition-duration: .01ms; }
-    }
-    .muted { color: var(--muted); }
-    .blue { color: var(--blue); }
-    .eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      color: #c8b5ff; font-size: .76rem; font-weight: 800;
-      letter-spacing: .14em; text-transform: uppercase;
-    }
-    .eyebrow::before { content: ""; width: 25px; height: 2px; background: var(--blue); border-radius: 3px; }
-    .section { padding: 92px 0; }
-    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
-    .section-head h2 { margin: 10px 0 0; font-size: clamp(2rem, 4vw, 2.85rem); line-height: 1.12; letter-spacing: -.045em; }
-    .section-head p { max-width: 460px; margin: 0; color: var(--muted); font-size: .98rem; }
-
-    /* Header */
-    .site-header {
-      position: sticky; top: 0; z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(14, 1, 45, .91);
-      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-    }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; min-height: 78px; gap: 24px; }
-    .brand { display: inline-flex; align-items: center; flex-shrink: 0; }
-    .brand-name { font-size: 1.22rem; font-weight: 850; letter-spacing: -.045em; line-height: 1.2; }
-    .header-right { display: flex; align-items: center; gap: clamp(18px, 3vw, 38px); }
-    .nav-links { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 29px); }
-    .nav-links a { position: relative; padding: 8px 0; color: #c8c0df; font-size: .85rem; font-weight: 650; transition: color .2s ease; }
-    .nav-links a::after { content: ""; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--blue); transition: width .2s ease; }
-    .nav-links a:hover, .nav-links a[aria-current="page"] { color: white; }
-    .nav-links a:hover::after, .nav-links a[aria-current="page"]::after { width: 100%; }
-    .socials { display: flex; align-items: center; gap: 9px; }
-    .mobile-nav-socials { display: none; }
-    .social-link {
-      display: inline-grid; place-items: center; width: 35px; height: 35px;
-      border: 1px solid transparent; border-radius: 11px; color: #ded6f1;
-      transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease;
-    }
-    .social-link:hover { color: white; background: var(--blue-soft); border-color: rgba(145, 93, 255, .40); transform: translateY(-2px); }
-    .social-link svg { width: 17px; height: 17px; fill: currentColor; }
-    .social-link .stroke-icon { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .menu-toggle { display: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; width: 42px; height: 42px; place-items: center; cursor: pointer; }
-    .menu-toggle svg { width: 20px; height: 20px; }
-
-    /* Hero */
-    .hero { padding: 72px 0 64px; overflow: hidden; border-bottom: 1px solid var(--line); }
-    .hero-grid { display: grid; grid-template-columns: minmax(280px, .86fr) minmax(0, 1.14fr); align-items: center; gap: clamp(38px, 7vw, 90px); }
-    .portrait-column { position: relative; min-width: 0; }
-    .portrait-frame {
-      position: relative; min-height: 420px; aspect-ratio: .91 / 1; max-height: 520px;
-      overflow: hidden; border: 1px solid rgba(123, 68, 255, .38); border-radius: 28px;
-      background: linear-gradient(145deg, #1c0a45, #09051c 65%, #1a0a38);
-      box-shadow: var(--shadow);
-    }
-    .portrait-frame::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(180deg, transparent 58%, rgba(8, 1, 27, .78)); }
-    .portrait-frame::after {
-      content: "UNITY · C# · GAMEPLAY"; position: absolute; left: 20px; bottom: 20px; z-index: 2;
-      color: #f5eeff; font-size: .67rem; letter-spacing: .14em; font-weight: 800;
-      border: 1px solid rgba(207, 190, 255, .30); border-radius: 8px; padding: 7px 10px;
-      background: rgba(14, 1, 45, .56); backdrop-filter: blur(8px);
-    }
-    .portrait-img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; object-position: 48% 35%; }
-    .portrait-orbit {
-      position: absolute; right: -19px; top: 58px; z-index: 3; display: grid; place-items: center;
-      width: 76px; height: 76px; border: 1px solid rgba(142, 87, 255, .44); border-radius: 22px;
-      background: rgba(31, 12, 73, .90); color: #ac8cff; box-shadow: 0 18px 48px rgba(0,0,0,.34); transform: rotate(7deg);
-    }
-    .portrait-orbit svg { width: 42px; height: 42px; }
-    .hero-copy { min-width: 0; }
-    .hero h1 { margin: 20px 0 22px; max-width: 780px; font-size: clamp(2.8rem, 5.6vw, 5.15rem); line-height: .99; letter-spacing: -.075em; font-weight: 850; }
-    .hero h1 .name-blue { color: var(--blue); }
-    .hero-lead { max-width: 640px; color: #c8c0dd; font-size: clamp(1rem, 1.35vw, 1.12rem); line-height: 1.82; margin: 0; }
-    .hero-lead strong { color: #fbf9ff; font-weight: 700; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 29px; }
-    .button {
-      display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 47px;
-      padding: 0 19px; border: 1px solid transparent; border-radius: 13px;
-      font-size: .86rem; font-weight: 750; transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button svg { width: 17px; height: 17px; flex: none; }
-    .button-primary { color: white; background: linear-gradient(135deg, #761cff, #272bff); box-shadow: 0 10px 25px rgba(97, 30, 255, .25); }
-    .button-primary:hover { background: linear-gradient(135deg, #9661ff, #5b54ff); box-shadow: 0 13px 32px rgba(93, 45, 255, .32); }
-    .button-ghost { color: #f5efff; border-color: rgba(164, 139, 255, .42); background: rgba(20, 5, 49, .72); }
-    .button-ghost:hover { border-color: rgba(145, 93, 255, .85); background: var(--blue-soft); }
-    .hero-contact { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 23px; margin-top: 25px; color: #aaa0ca; font-size: .81rem; }
-    .contact-inline { display: inline-flex; align-items: center; gap: 9px; overflow-wrap: anywhere; }
-    .contact-inline svg { width: 16px; height: 16px; color: #8a63ff; flex: none; }
-    .contact-inline:hover { color: white; }
-    .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 35px; max-width: 620px; }
-    .stat { padding: 15px 16px; border: 1px solid var(--line); border-radius: 15px; background: rgba(33, 15, 71, .72); }
-    .stat-number { display: block; color: #ffffff; font-size: 1.42rem; font-weight: 850; line-height: 1.2; letter-spacing: -.04em; }
-    .stat-label { display: block; margin-top: 5px; color: var(--subtle); font-size: .7rem; line-height: 1.4; }
-
-    /* Featured games */
-    .games-section { background: linear-gradient(180deg, rgba(22, 11, 56, .60), rgba(14,1,45,0)); }
-    .text-link { display: inline-flex; align-items: center; gap: 9px; color: var(--blue); font-weight: 750; font-size: .87rem; white-space: nowrap; }
-    .text-link svg { width: 17px; height: 17px; transition: transform .2s ease; }
-    .text-link:hover svg { transform: translateX(4px); }
-    .games-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-    .game-card {
-      min-width: 0; overflow: hidden; position: relative; border: 1px solid var(--line); border-radius: 19px;
-      background: linear-gradient(160deg, rgba(32, 16, 70, .98), rgba(12, 5, 35, .98));
-      box-shadow: 0 12px 30px rgba(0,0,0,.12); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-    }
-    .game-card:hover, .game-card:focus-within { transform: translateY(-5px); border-color: rgba(142, 87, 255, .68); box-shadow: 0 22px 44px rgba(0,0,0,.24); }
-    .game-media { position: relative; aspect-ratio: 16/9; overflow: hidden; background: #1a0d3d; }
-    .game-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s cubic-bezier(.2,.7,.2,1); }
-    .game-card:hover .game-media img, .game-card:focus-within .game-media img { transform: scale(1.07); }
-    .game-media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(8,1,27,.04), rgba(8,1,27,.50)); }
-    .game-overlay {
-      position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; padding: 15px;
-      background: rgba(14, 1, 45, .76); backdrop-filter: blur(5px);
-      opacity: 0; transition: opacity .22s ease;
-    }
-    .game-card:hover .game-overlay, .game-card:focus-within .game-overlay { opacity: 1; }
-    .store-button {
-      display: inline-flex; align-items: center; justify-content: center; gap: 9px; max-width: 100%;
-      padding: 11px 14px; border: 1px solid rgba(135, 189, 255, .62); border-radius: 11px;
-      color: white; background: rgba(105, 29, 255, .42); font-size: .79rem; font-weight: 800;
-      transform: translateY(5px); transition: transform .22s ease, background .22s ease;
-    }
-    .game-card:hover .store-button, .game-card:focus-within .store-button { transform: translateY(0); }
-    .store-button:hover { background: #4315cc; }
-    .store-button svg { width: 16px; height: 16px; flex: none; }
-    .store-mark { display: inline-grid; place-items: center; width: 23px; height: 23px; border-radius: 7px; color: #c5b5ff; background: rgba(8, 2, 30, .65); font-size: .65rem; font-weight: 900; }
-    .game-content { padding: 18px 18px 19px; }
-    .game-topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
-    .game-type { color: #c4b2ff; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-    .platform { padding: 4px 8px; border: 1px solid rgba(145, 172, 209, .19); border-radius: 999px; color: #b6acd2; font-size: .66rem; font-weight: 700; }
-    .game-content h3 { margin: 0 0 8px; font-size: 1.12rem; line-height: 1.3; letter-spacing: -.025em; }
-    .game-content p { margin: 0; min-height: 54px; color: var(--muted); font-size: .84rem; line-height: 1.65; }
-    .card-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 15px; margin-top: 13px; border-top: 1px solid rgba(159, 117, 255, .18); color: #aaa0c8; font-size: .74rem; }
-    .card-foot a { display: inline-flex; align-items: center; gap: 7px; color: #c9b4ff; font-weight: 750; white-space: nowrap; }
-    .card-foot a:hover { color: white; }
-    .card-foot svg { width: 14px; height: 14px; }
-
-    /* About & experience */
-    .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(42px, 8vw, 100px); align-items: start; }
-    .about-copy h2 { margin: 12px 0 18px; font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: -.05em; line-height: 1.1; }
-    .about-copy p { max-width: 650px; color: var(--muted); margin: 0 0 16px; font-size: .97rem; line-height: 1.88; }
-    .about-copy p strong { color: #f7f1ff; }
-    .about-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 25px; }
-    .skills-panel { padding: 25px; border: 1px solid var(--line); border-radius: 21px; background: linear-gradient(145deg, rgba(32,16,70,.88), rgba(12,5,35,.78)); }
-    .skills-panel h3 { margin: 0 0 5px; font-size: 1.18rem; letter-spacing: -.02em; }
-    .skills-panel > p { margin: 0 0 22px; color: var(--subtle); font-size: .8rem; }
-    .skill-list { display: flex; flex-wrap: wrap; gap: 9px; }
-    .skill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; color: #d9d0ee; border: 1px solid rgba(159, 117, 255, .22); border-radius: 10px; background: rgba(105, 29, 255, .09); font-size: .78rem; font-weight: 650; }
-    .skill::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
-    .experience { margin-top: 42px; padding-top: 27px; border-top: 1px solid var(--line); }
-    .experience-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
-    .experience-head h3 { margin: 0; font-size: 1.05rem; }
-    .experience-head span { color: var(--subtle); font-size: .73rem; }
-    .experience-list { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 11px; }
-    .experience-item { position: relative; padding: 14px 15px 15px; border: 1px solid var(--line); border-radius: 13px; background: rgba(24, 8, 51, .68); }
-    .experience-item::before { content: ""; display: block; width: 7px; height: 7px; margin-bottom: 13px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 0 5px rgba(142, 87, 255, .18); }
-    .experience-item strong { display: block; font-size: .82rem; line-height: 1.4; }
-    .experience-item span { display: block; margin-top: 6px; color: var(--subtle); font-size: .69rem; line-height: 1.4; }
-
-    /* Contact & footer */
-    .contact-section { padding: 65px 0 72px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: radial-gradient(ellipse at 50% 100%, rgba(88, 22, 255, .19), transparent 55%), var(--bg-raised); }
-    .contact-box { text-align: center; max-width: 720px; margin: 0 auto; }
-    .contact-icon { display: grid; place-items: center; width: 58px; height: 58px; margin: 0 auto 22px; border: 1px solid rgba(125, 67, 255, .45); border-radius: 19px; color: #b7a5ff; background: rgba(105, 29, 255, .16); }
-    .contact-icon svg { width: 26px; height: 26px; }
-    .contact-box h2 { margin: 12px 0 12px; font-size: clamp(2rem, 4.5vw, 3.2rem); line-height: 1.1; letter-spacing: -.055em; }
-    .contact-box p { margin: 0 auto 26px; color: var(--muted); max-width: 490px; font-size: .95rem; }
-    .contact-box .button { min-height: 48px; }
-    .footer { padding: 27px 0 24px; }
-    .footer-top { display: flex; justify-content: space-between; align-items: center; gap: 22px; padding-bottom: 22px; }
-    .footer-brand { display: flex; flex-direction: column; gap: 4px; }
-    .footer-brand strong { font-size: 1rem; letter-spacing: -.025em; }
-    .footer-brand span { color: var(--subtle); font-size: .73rem; }
-    .footer-nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 18px; }
-    .footer-nav a { color: #a99fc3; font-size: .78rem; font-weight: 650; }
-    .footer-nav a:hover { color: white; }
-    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 19px; border-top: 1px solid var(--line); color: #8a7dae; font-size: .72rem; }
-    .footer-bottom a { color: #c4b6e4; }
-    .footer-bottom a:hover { color: white; }
-    .back-top { display: inline-grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: 10px; color: #cfc4ff; }
-    .back-top svg { width: 16px; height: 16px; }
-
-    @media (max-width: 1020px) {
-      .header-right { gap: 17px; }
-      .header-socials { display: none; }
-      .hero-grid { gap: 42px; }
-      .portrait-frame { min-height: 360px; }
-      .games-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .experience-list { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    }
-    @media (max-width: 760px) {
-      .container { width: min(var(--max), calc(100% - 34px)); }
-      .header-inner { min-height: 70px; }
-      .menu-toggle { display: grid; }
-      .header-right { gap: 10px; }
-      .header-right .socials { display: none; }
-      .nav-links {
-        position: absolute; top: calc(100% + 1px); left: 0; right: 0; display: none;
-        align-items: stretch; gap: 0; padding: 9px 17px 16px; border-bottom: 1px solid var(--line);
-        background: rgba(14,1,45,.98); box-shadow: 0 20px 30px rgba(0,0,0,.22);
-      }
-      .nav-links.is-open { display: flex; flex-direction: column; }
-      .nav-links a { padding: 12px 9px; border-radius: 9px; }
-      .nav-links a:hover { background: rgba(142, 87, 255, .12); }
-      .nav-links a::after { display: none; }
-      .mobile-nav-socials { display: flex; align-items: center; gap: 7px; padding: 12px 6px 2px; margin-top: 7px; border-top: 1px solid var(--line); }
-      .hero { padding: 43px 0 54px; }
-      .hero-grid { grid-template-columns: 1fr; gap: 31px; }
-      .portrait-column { width: min(100%, 460px); margin: 0 auto; }
-      .portrait-frame { min-height: 0; aspect-ratio: 1.12 / 1; max-height: 430px; }
-      .portrait-orbit { right: -8px; width: 62px; height: 62px; border-radius: 18px; }
-      .portrait-orbit svg { width: 34px; height: 34px; }
-      .hero h1 { font-size: clamp(2.7rem, 10vw, 4.2rem); margin-top: 16px; }
-      .hero-stats { max-width: 100%; }
-      .section { padding: 68px 0; }
-      .section-head { align-items: start; flex-direction: column; gap: 15px; margin-bottom: 24px; }
-      .about-grid { grid-template-columns: 1fr; gap: 29px; }
-      .experience { margin-top: 32px; }
-      .footer-top { align-items: flex-start; flex-wrap: wrap; }
-      .footer-nav { order: 3; width: 100%; justify-content: flex-start; }
-    }
-    @media (max-width: 520px) {
-      .brand-name { font-size: 1.08rem; }
-      .games-grid { grid-template-columns: 1fr; gap: 15px; }
-      .game-content p { min-height: 0; }
-      .hero-actions { display: grid; grid-template-columns: 1fr; }
-      .hero-actions .button { width: 100%; }
-      .hero-contact { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .hero-stats { gap: 8px; }
-      .stat { padding: 12px 10px; }
-      .stat-number { font-size: 1.2rem; }
-      .stat-label { font-size: .64rem; }
-      .portrait-frame { aspect-ratio: .98 / 1; }
-      .portrait-img { object-position: 49% 34%; }
-      .skills-panel { padding: 20px; }
-      .experience-list { grid-template-columns: 1fr 1fr; gap: 9px; }
-      .experience-item { padding: 12px; }
-      .experience-item strong { font-size: .77rem; }
-      .experience-item span { font-size: .66rem; }
-      .contact-section { padding: 55px 0 60px; }
-      .footer-top { gap: 18px; }
-      .footer-bottom { align-items: flex-start; flex-wrap: wrap; }
-    }
-    @media (hover: none) {
-      .game-overlay { opacity: 1; align-items: end; justify-items: start; padding: 12px; background: linear-gradient(180deg, transparent 10%, rgba(5,12,23,.78)); backdrop-filter: none; }
-      .store-button { padding: 8px 11px; font-size: .72rem; transform: none; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
-    }
-  </style>
 </head>
-<body id="top" class="is-loading">
-  <div class="site-loader" id="site-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
-    <div class="loader-content">
-      <div class="loader-orbit" aria-hidden="true"></div>
-      <p class="loader-name">Azzeddine <span>Talha</span></p>
-      <p class="loader-status">LOADING PORTFOLIO<span class="loader-dots" aria-hidden="true"></span></p>
-      <div class="loader-track" aria-hidden="true"><span></span></div>
-    </div>
-  </div>
-  <noscript><style>.site-loader{display:none!important}body.is-loading .site-header,body.is-loading main,body.is-loading .footer{opacity:1!important;pointer-events:auto!important}</style></noscript>
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="Azzeddine Talha home">
-        <span class="brand-name">Azzeddine <span class="blue">Talha</span></span>
-      </a>
-      <div class="header-right">
-        <nav class="nav-links" id="primary-nav" aria-label="Main navigation">
-          <a href="#top" aria-current="page">Home</a>
-          <a href="#games">Games</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-          <div class="socials mobile-nav-socials" aria-label="Social links">
-            <a class="social-link" href="https://x.com/TalhaAzzeddine" target="_blank" rel="noopener noreferrer" aria-label="X profile" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20Z"/></svg></a>
-            <a class="social-link" href="https://www.linkedin.com/in/azzeddine-talha-796a98254/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52C22 2.68 21.31 2 20.45 2ZM8 18H5V9h3v9ZM6.5 7.77a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48ZM19 18h-3v-4.38c0-1.04-.02-2.38-1.45-2.38-1.45 0-1.67 1.13-1.67 2.3V18h-3V9h2.88v1.23h.04c.4-.76 1.38-1.56 2.84-1.56C18.67 8.67 19 10.6 19 13.1V18Z"/></svg></a>
-            <a class="social-link" href="https://store.steampowered.com/app/3005210/The_Saint/" target="_blank" rel="noopener noreferrer" aria-label="Steam game page" title="Steam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.98 0A12 12 0 0 0 .4 8.9l6.46 2.66a3.37 3.37 0 0 1 1.91-.6l2.87-4.16v-.06a4.45 4.45 0 1 1 4.45 4.45h-.1l-4.1 2.92a3.4 3.4 0 0 1-6.72.87L.55 13.1A12 12 0 1 0 11.98 0Zm-2.2 18.2a2.04 2.04 0 0 0 1.98-1.55l-2.9-1.2a2.04 2.04 0 0 0 .92 2.75Zm6.33-10.78a2.64 2.64 0 1 0 0-5.28 2.64 2.64 0 0 0 0 5.28Z"/></svg></a>
-            <a class="social-link" href="https://play.google.com/store/search?q=azzeddine%20talha&amp;c=apps" target="_blank" rel="noopener noreferrer" aria-label="Google Play games" title="Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.3 2.7c-.2.3-.3.7-.3 1.2v16.2c0 .5.1.9.3 1.2l9-9.3-9-9.3Z" fill="#68d391"/><path d="m14 13.6-2.1 2.2-6.5 6.7c.4.2.9.1 1.4-.2l10.3-5.9-3.1-2.8Z" fill="#60a5fa"/><path d="m17.1 7.6-10.3-5.9c-.5-.3-1-.4-1.4-.2l8.6 8.9 3.1-2.8Z" fill="#fbbf24"/><path d="m21 10.1-3.6-2.1-3.4 3.5 3.4 3.5 3.6-2.1c1.1-.6 1.1-2.2 0-2.8Z" fill="#fb7185"/></svg></a>
-            <a class="social-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub (replace with your profile)" title="GitHub — update profile URL"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.75-1.32-3.75-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.23-5.1 5.51.4.34.75 1 .75 2.02v3c0 .3.2.65.76.54A11.1 11.1 0 0 0 12 .9Z"/></svg></a>
-          </div>
-        </nav>
-        <div class="socials header-socials" aria-label="Social links">
-          <a class="social-link" href="https://x.com/TalhaAzzeddine" target="_blank" rel="noopener noreferrer" aria-label="X profile" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20Z"/></svg></a>
-          <a class="social-link" href="https://www.linkedin.com/in/azzeddine-talha-796a98254/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52c0-.84-.69-1.52-1.55-1.52ZM8 18H5V9h3v9ZM6.5 7.77a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48ZM19 18h-3v-4.38c0-1.04-.02-2.38-1.45-2.38-1.45 0-1.67 1.13-1.67 2.3V18h-3V9h2.88v1.23h.04c.4-.76 1.38-1.56 2.84-1.56C18.67 8.67 19 10.6 19 13.1V18Z"/></svg></a>
-          <a class="social-link" href="https://store.steampowered.com/app/3005210/The_Saint/" target="_blank" rel="noopener noreferrer" aria-label="Steam game page" title="Steam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.98 0A12 12 0 0 0 .4 8.9l6.46 2.66a3.37 3.37 0 0 1 1.91-.6l2.87-4.16v-.06a4.45 4.45 0 1 1 4.45 4.45h-.1l-4.1 2.92a3.4 3.4 0 0 1-6.72.87L.55 13.1A12 12 0 1 0 11.98 0Zm-2.2 18.2a2.04 2.04 0 0 0 1.98-1.55l-2.9-1.2a2.04 2.04 0 0 0 .92 2.75Zm6.33-10.78a2.64 2.64 0 1 0 0-5.28 2.64 2.64 0 0 0 0 5.28Z"/></svg></a>
-          <a class="social-link" href="https://play.google.com/store/search?q=azzeddine%20talha&c=apps" target="_blank" rel="noopener noreferrer" aria-label="Google Play games" title="Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.3 2.7c-.2.3-.3.7-.3 1.2v16.2c0 .5.1.9.3 1.2l9-9.3-9-9.3Z" fill="#68d391"/><path d="m14 13.6-2.1 2.2-6.5 6.7c.4.2.9.1 1.4-.2l10.3-5.9-3.1-2.8Z" fill="#60a5fa"/><path d="m17.1 7.6-10.3-5.9c-.5-.3-1-.4-1.4-.2l8.6 8.9 3.1-2.8Z" fill="#fbbf24"/><path d="m21 10.1-3.6-2.1-3.4 3.5 3.4 3.5 3.6-2.1c1.1-.6 1.1-2.2 0-2.8Z" fill="#fb7185"/></svg></a>
-          <a class="social-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub (replace with your profile)" title="GitHub — update profile URL"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.75-1.32-3.75-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.23-5.1 5.51.4.34.75 1 .75 2.02v3c0 .3.2.65.76.54A11.1 11.1 0 0 0 12 .9Z"/></svg></a>
-        </div>
-        <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
-      </div>
-    </div>
-  </header>
 
-  <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-grid">
-        <div class="portrait-column">
-          <div class="portrait-frame">
-            <img class="portrait-img" src="assets/images/azzeddine-talha.jpg" alt="Azzeddine Talha, Lead Unity Developer" width="960" height="1280" fetchpriority="high">
-          </div>
-          <div class="portrait-orbit" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none"><path d="M32 5 58 19.5v25L32 59 6 44.5v-25L32 5Z" stroke="currentColor" stroke-width="3"/><path d="M32 17 46 25v14L32 47 18 39V25l14-8Z" stroke="currentColor" stroke-width="3"/><path d="m32 17 0 30M18 25l28 14M46 25 18 39" stroke="currentColor" stroke-width="2" opacity=".75"/></svg>
-          </div>
+<body>
+    <header class="header">
+        <a href="#" class="logo"><span>Azzeddine Talha</span></a>
+        <ul class="nav-links">
+            <li>
+                <a href="#about">About</a>
+            </li>
+            <li>
+                <a href="#experience">Experience</a>
+            </li>
+
+            <li>
+                <a href="#projects">Projects</a>
+            </li>
+            <li>
+                <a href="#contact">Contact</a>
+            </li>
+        </ul>
+        <i class="fa-mosaic fa-solid fa-bars" id="menu-icon"></i>
+
+    </header>
+    <section id="about" class="about">
+        <div class="about-container">
+            <img src="imgs/Azzeddine Talha Profile.png" alt="">
+            <div class="info-box">
+                <div class="text">
+                    <h3>Hi, I'm</h3>
+                    <h1>Azzeddine Talha</h1>
+                    <span>Gamedev & 3D designer</span>
+                </div>
+
+                <div class="btn-group">
+                    <div class="btn"><a href="pdf/Azzeddine_Talha_cv.pdf" download="Azzeddine_Talha_cv" target="_blank">
+                            Download CV</a></div>
+                    <div class="btn"><a href="pdf/Azzeddine_Talha Portfolio.pdf" download="Azzeddine_Talha_portfolio"
+                            target="_blank">Download Portfolio</a></div>
+                </div>
+                <div class="socials">
+                    <a href="https://www.linkedin.com/in/azzeddine-talha-me/" target="_blank"><i
+                            class="fa-brands fa-square-linkedin"></a></i>
+                    <a href="https://github.com/TalhaAzzeddine" target="_blank"><i
+                            class="fa-brands fa-github-alt"></a></i>
+                    <a href="https://x.com/TalhaAzzeddine" target="_blank"> <i
+                            class="fa-brands fa-square-x-twitter"></a></i>
+                    <a href="https://store.steampowered.com/curator/45884061/?appid=3005210" target="_blank"> <i
+                            class="fa-brands fa-steam"></a></i>
+                    <a href="https://azzeddinetalhadev.itch.io/" target="_blank"> <i
+                            class="fa-brands fa-itch-io"></a></i>
+
+                </div>
+            </div>
         </div>
-        <div class="hero-copy">
-          <span class="eyebrow">Lead Unity Developer · Technical Lead</span>
-          <h1 id="hero-title">Hello, I'm<br><span class="name-blue">Azzeddine Talha.</span></h1>
-          <p class="hero-lead">I build <strong>games and interactive experiences</strong> with Unity and C# — from responsive gameplay systems and multiplayer features to tools, shaders, VFX, and immersive worlds across mobile, PC, WebGL, and XR.</p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="assets/files/Azzeddine_Talha_CV.pdf" download>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>
-              Download CV
-            </a>
-            <a class="button button-ghost" href="assets/files/Azzeddine_Talha_Portfolio.pdf" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>
-              View Portfolio PDF
-            </a>
-          </div>
-          <div class="hero-contact">
-            <span class="contact-inline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>Casablanca-Settat, Morocco</span>
-            <a class="contact-inline" href="mailto:azzeddine.talha.me@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>azzeddine.talha.me@gmail.com</a>
-          </div>
-          <div class="hero-stats" aria-label="Career highlights">
-            <div class="stat"><span class="stat-number">5+ years</span><span class="stat-label">Game development experience</span></div>
-            <div class="stat"><span class="stat-number">11+</span><span class="stat-label">Mobile games published</span></div>
-            <div class="stat"><span class="stat-number">Multi-platform</span><span class="stat-label">Mobile · PC · WebGL · XR</span></div>
-          </div>
+    </section>
+    <section id="experience" class="experience">
+
+        <h2 class="section-title">Experience</h2>
+
+        <div class="experience-info">
+            <div class="grid">
+                <div class="grid-card">
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                    <span>Lead Developer & Project Manager Unity (Snack Groups)</span>
+                    <h3>June 2025-May 2026</h3>
+                    <p>Lead Unity Developer at an immersive experience agency (games, VR/AR, virtual showrooms, mobile
+                        apps).
+                        Directed and coordinated technical deliveries with internaland external teams.
+                        Oversaw technical design, Unity project architecture, and optimization for complexe interactive
+                        systems.
+                        Skills : Unity C# · XR · VR/AR · Mobile · WebGL . Game Development · Technical Leadership</p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-unity"></i>
+                    <span>Lead Unity Developer (A314Lab)</span>
+                    <h3>Sept 2024-June 2025</h3>
+                    <p>Led the creation of gameplay systemsand mobile/WebGL game architecture.
+                        Managed builds, performance optimization, and full game design pipelines.
+                        Built custom tools and library plugins to enhance workflow efficiency.
+                        Skills : Unity C# · Mobile · WebGL . Game Development · Technical Leadership</p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-unity"></i>
+                    <span>Unity Developer | Game Designer(A314Lab)</span>
+                    <h3>Nov 2023-Sept 2024</h3>
+                    <p>Analyzed customer needs to prototype and design games.
+                        Developed and optimized Unity game performance.
+                        Created 3D assets and contributed to game designand UX.
+                        Collaborated cross-functionally with developers and designers.
+                        Skills : Unity C# · Mobile · WebGL . Game Development · Game Design . 3D Design . UI UX Design
+                    </p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-solid fa-vr-cardboard"></i>
+                    <span>Freelance Unity Developer (Virtu 360)</span>
+                    <h3>Sept 2024-Nov 2024</h3>
+                    <p>Developed 3D interactive experiences for architecture and real estate.
+                        Used Unity for simulations showcased at the Salon International du Bâtiment (SIB) – 2024.
+                        Delivered shaders, multiplayer features, and architectural visualization tools.
+                        Skills : Unity · Optimization · Multiplayer · Shader Graph · Architectural Design
+                    </p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-unity"></i>
+                    <span>Technical Lead (AppCake IT)</span>
+                    <h3>Jan 2023-Nov 2023</h3>
+                    <p>Led the creation of gameplay systems and mobile game & apps architecture.
+                        Managed builds, performance optimization.
+                        Skills : Unity C# · Mobile . Game Development · Technical Leadership
+                    </p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-unity"></i>
+                    <span>Unity Developer iOS/Android (AppCake IT) </span>
+                    <h3>Nov 2023-Jan 2023</h3>
+                    <p>Built games and applications for Android/iOS platforms.
+                        Authored technicaldocumentation and structured scalable projects.
+                        Collaborated remotely with designers, PMs, and engineers.
+                        Skills : Unity C# · Mobile . Game Development · IOS . Android
+                    </p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-html5"></i>
+
+                    <span>Freelance Web Developer (Bochequipement) </span>
+                    <h3>July 2021-Oct 2021</h3>
+                    <p>Built a complete 72-page website and internal admin tools for furniture company.
+                        Stack: HTML, CSS, JS, PHP, MySQL, Bootstrap, SEO.
+                    </p>
+                </div>
+                <div class="grid-card">
+                    <i class="fa-brands fa-html5"></i>
+
+                    <span>Intern – Web Development (BTS Center Morroco ) </span>
+                    <h3>July 2021-Oct 2021</h3>
+                    <p>Developed and designed the educational institution’s website front and backend.
+                        Stack: HTML, CSS, JS, PHP, MySQL, Bootstrap, SEO.
+                    </p>
+                </div>
+            </div>
+
         </div>
-      </div>
+
     </section>
 
-    <section class="section games-section" id="games" aria-labelledby="games-title">
-      <div class="container">
-        <div class="section-head">
-          <div><span class="eyebrow">Selected work</span><h2 id="games-title">Games I've worked on</h2></div>
-          <p>A selection of mobile and PC projects spanning multiplayer, puzzle design, physics gameplay, and atmospheric horror.</p>
+    <section id="projects" class="projects">
+        <h2 class="section-title">Some of my projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <img src="projects/3D Gym Women.png" alt="">
+                <h3>3D Gym Women</h3>
+                <p><b>3D Gym Women</b> is a comprehensive fitness application featuring real-time 3D exercise
+                    demonstrations, interactive content, and dynamic user engagement systems.
+                    The app delivers guided workouts through animated 3D models, combined with quizzes, statistics
+                    tracking, and continuously updated content via backend integration.
+                    Developed for mobile (iOS & Android) and WebGL, the project includes real-time data synchronization,
+                    remote content updates, and scalable architecture. I led the full development and implementation in
+                    Unity, integrating backend systems, 3D assets, animations, and all application features into a
+                    cohesive and high-performance experience.
+                </p>
+                <div class="btn-group">
+                    <div class="btn"><a href="https://www.fb-curves.com/en/" target="_blank">Website</a></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="projects/MeowDoku.png" alt="">
+                <h3>Meawdoku – Music Puzzle Game
+                </h3>
+                <p>Logic puzzle game combining musical themes, adorable cats, and deduction-based gameplay.
+                    Features handcrafted challenges, daily puzzles, animations, and relaxing music.
+                </p>
+                <div class="btn-group">
+                    <div class="btn"><a href="https://play.google.com/store/apps/details?id=com.mandcatgames.meawdoku"
+                            target="_blank">Play Store</a></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="projects/Party Mimic.png" alt="">
+                <h3>Party Mimic – Multiplayer Party Game
+                </h3>
+                <p>Multiplayer party game where up to 4 players record funny sound imitations, listen to each other and
+                    vote for the best performance.
+                </p>
+                <div class="btn-group">
+                    <div class="btn"><a
+                            href="https://play.google.com/store/apps/details?id=com.MandcatGames.MimicVoicesParty"
+                            target="_blank">Play Store</a></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="projects/FlipFlop.png" alt="">
+                <h3>Flip-Flop Rage – Physics Arcade Game
+
+                </h3>
+                <p>Fast-paced physics arcade game where players steer a flying flip-flop through obstacles, destroy
+                    objects and trigger funny ragdoll reactions.
+                    Features destruction, bullet time, boosts and hundreds of levels.
+                </p>
+                <div class="btn-group">
+                    <div class="btn"><a
+                            href="https://play.google.com/store/apps/details?id=com.mandcatgames.flipfloprage"
+                            target="_blank">Play Store</a></div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="projects/ManikinMimic.jpg" alt="">
+                <h3>Manikin Mimic – Multiplayer Game</h3>
+                <p>Manikin Mimic is an online multiplayer hide-and-seek party game developed in Unity.
+                    Players become Manikins and use customizable poses to blend into the environment while avoiding the
+                    Finder.
+                </p>
+                <div class="btn-group">
+                    <div class="btn"><a href="https://store.steampowered.com/app/5270510/Manikin_Mimic/"
+                            target="_blank">Steam</a></div>
+
+                </div>
+            </div>
+
+            <div class="project-card">
+                <img src="projects/The Saint.jpg" alt="">
+                <h3>The Saint Horror Game </h3>
+                <p>The Saint is a psychological horror game developed for PC and released on Steam. Set in a dark and
+                    unsettling environment, the game focuses on atmosphere,
+                    tension, and storytelling, delivering a disturbing experience without relying
+                    on excessive jump scares.
+                    The project was fully created independently, covering all aspects of development from concept to
+                    release.</p>
+                <div class="btn-group">
+                    <div class="btn"><a href="https://store.steampowered.com/app/3005210/The_Saint/"
+                            target="_blank">Steam</a></div>
+                </div>
+            </div>
+
         </div>
-        <div class="games-grid">
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/manikin-mimic.jpg" alt="Manikin Mimic gameplay artwork" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://store.steampowered.com/app/5270510/Manikin_Mimic/" target="_blank" rel="noopener noreferrer"><span class="store-mark">S</span> View on Steam <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
+    </section>
+    <section id="contact" class="contact">
+        <div class="input-box">
+            <h2 class="section-title">
+                Lets Chat!
+            </h2>
+            <div class="input">
+                <input id="name" type="text" placeholder="your name" name="name" required>
+                <i class="fa-solid fa-envelope"></i>
             </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Multiplayer · Party</span><span class="platform">PC / Steam</span></div><h3>Manikin Mimic</h3><p>An online hide-and-seek game where players pose as manikins to blend into the crowd and avoid the Finder.</p><div class="card-foot"><span>Gameplay · Networking · Pose Editor</span><a href="https://store.steampowered.com/app/5270510/Manikin_Mimic/" target="_blank" rel="noopener noreferrer">Steam page <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/the-saint.jpg" alt="The Saint psychological horror game artwork" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://store.steampowered.com/app/3005210/The_Saint/" target="_blank" rel="noopener noreferrer"><span class="store-mark">S</span> View on Steam <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
+            <div class="input">
+                <input id="email" type="email" name="email" placeholder="youremail@exp.com" required>
+                <i class="fa-solid fa-envelope"></i>
             </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Horror · Exploration</span><span class="platform">PC / Steam</span></div><h3>The Saint</h3><p>A first-person psychological horror game built around atmosphere, exploration, mystery, and unsettling storytelling.</p><div class="card-foot"><span>Solo development · Full production</span><a href="https://store.steampowered.com/app/3005210/The_Saint/" target="_blank" rel="noopener noreferrer">Steam page <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/party-mimic.jpg" alt="Party Mimic mobile game screenshot" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://play.google.com/store/apps/details?id=com.mandcatgames.partymimic" target="_blank" rel="noopener noreferrer"><span class="store-mark">▶</span> Get on Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
+            <div class="input">
+                <input id="message" type="text" name="title" placeholder="Say Hi!" required>
+                <i class="fa-solid fa-comment"></i>
             </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Party · Multiplayer</span><span class="platform">Android</span></div><h3>Party Mimic</h3><p>A funny multiplayer party game where players record sound imitations, listen to each other, and vote for the best performance.</p><div class="card-foot"><span>Gameplay · UI/UX · Monetization</span><a href="https://play.google.com/store/apps/details?id=com.mandcatgames.partymimic" target="_blank" rel="noopener noreferrer">Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/meawdoku.jpg" alt="Meawdoku music puzzle game screenshot" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://play.google.com/store/apps/details?id=com.mandcatgames.meawdoku" target="_blank" rel="noopener noreferrer"><span class="store-mark">▶</span> Get on Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
-            </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Puzzle · Music</span><span class="platform">Android</span></div><h3>Meawdoku</h3><p>A relaxing logic puzzle blending musical themes, adorable cats, handcrafted challenges, and daily puzzles.</p><div class="card-foot"><span>Puzzle logic · UI/UX · Audio</span><a href="https://play.google.com/store/apps/details?id=com.mandcatgames.meawdoku" target="_blank" rel="noopener noreferrer">Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/flip-flop-rage.jpg" alt="Flip-Flop Rage physics arcade game screenshot" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://play.google.com/store/apps/details?id=com.mandcatgames.flipfloprage" target="_blank" rel="noopener noreferrer"><span class="store-mark">▶</span> Get on Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
-            </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Physics · Arcade</span><span class="platform">Android</span></div><h3>Flip-Flop Rage</h3><p>A physics-driven arcade game about steering a flying flip-flop through obstacles, destruction, boosts, and ragdoll chaos.</p><div class="card-foot"><span>Physics · Destruction · VFX</span><a href="https://play.google.com/store/apps/details?id=com.mandcatgames.flipfloprage" target="_blank" rel="noopener noreferrer">Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
-          <article class="game-card">
-            <div class="game-media">
-              <img src="assets/images/guess-the-angle.jpg" alt="Guess The Angle puzzle game screenshot" width="1120" height="630" loading="lazy">
-              <div class="game-overlay"><a class="store-button" href="https://play.google.com/store/apps/details?id=com.mandcatgames.guesstheangle" target="_blank" rel="noopener noreferrer"><span class="store-mark">▶</span> Get on Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div>
-            </div>
-            <div class="game-content"><div class="game-topline"><span class="game-type">Puzzle · Casual</span><span class="platform">Android</span></div><h3>Guess The Angle</h3><p>A casual puzzle game where players estimate and match angles using simple controls and increasingly challenging levels.</p><div class="card-foot"><span>Gameplay · Animation · Optimization</span><a href="https://play.google.com/store/apps/details?id=com.mandcatgames.guesstheangle" target="_blank" rel="noopener noreferrer">Google Play <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a></div></div>
-          </article>
+            <div id="submit" class="btn" onclick="sendMail()">Send it!</div>
+            <p id="messageSend" class="messageSend">Message was send succusfuly, Thanks I will reach out to you soon!"</p>
         </div>
-      </div>
     </section>
 
-    <section class="section" id="about" aria-labelledby="about-title">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-copy">
-            <span class="eyebrow">A little about me</span>
-            <h2 id="about-title">More than just<br><span class="blue">writing code.</span></h2>
-            <p>I'm Azzeddine Talha, a <strong>Lead Unity Developer</strong> with 5+ years of experience building games and interactive experiences across mobile, PC, WebGL, and VR/AR.</p>
-            <p>I've worked with teams including Snack Group, A314LAB, AppCake IT, and Virtu 360, and founded Silest Studio, where I helped take 11+ mobile games from concept to release.</p>
-            <p>I enjoy combining clean technical architecture with strong game feel — solving gameplay challenges, building reusable tools, and exploring <strong>shaders, VFX, 3D, multiplayer, and XR</strong>.</p>
-            <div class="about-actions">
-              <a class="button button-primary" href="assets/files/Azzeddine_Talha_CV.pdf" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 17v3h16v-3"/></svg>Download CV</a>
-              <a class="button button-ghost" href="assets/files/Azzeddine_Talha_Portfolio.pdf" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>View Portfolio</a>
-            </div>
-          </div>
-          <div class="skills-panel">
-            <h3>Core skills</h3>
-            <p>Technical skills I use to bring interactive projects to life.</p>
-            <div class="skill-list">
-              <span class="skill">Unity &amp; C#</span>
-              <span class="skill">Gameplay systems</span>
-              <span class="skill">Technical architecture</span>
-              <span class="skill">Multiplayer &amp; networking</span>
-              <span class="skill">Shaders &amp; VFX</span>
-              <span class="skill">Optimization &amp; profiling</span>
-              <span class="skill">Unity editor tools</span>
-              <span class="skill">XR / VR / AR</span>
-              <span class="skill">UI / UX</span>
-              <span class="skill">Game design</span>
-              <span class="skill">3D workflows</span>
-              <span class="skill">Technical leadership</span>
-            </div>
-          </div>
-        </div>
-        <div class="experience">
-          <div class="experience-head"><h3>Selected experience</h3><span>Roles and teams from my CV</span></div>
-          <div class="experience-list">
-            <div class="experience-item"><strong>Independent Developer</strong><span>May 2026 — Present</span></div>
-            <div class="experience-item"><strong>Snack Group</strong><span>Lead Developer &amp; Project Manager · 2025–2026</span></div>
-            <div class="experience-item"><strong>A314LAB</strong><span>Lead Unity Developer · 2024–2025</span></div>
-            <div class="experience-item"><strong>AppCake IT</strong><span>Unity Developer / Technical Lead · 2022–2023</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <footer>
+        <ul>
+            <li>
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </li>
+        </ul>
+        <p class="copyright">© All Rights Reserved Azzeddine Talha</p>
+    </footer>
+    <script src="main.js"></script>
+    <script type="text/javascript">
 
-    <section class="contact-section" id="contact" aria-labelledby="contact-title">
-      <div class="container contact-box">
-        <div class="contact-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></div>
-        <span class="eyebrow">Get in touch</span>
-        <h2 id="contact-title">Let's build something<br><span class="blue">great together.</span></h2>
-        <p>Have a project in mind, a role to discuss, or just want to talk game development? Send me an email.</p>
-        <a class="button button-primary" href="mailto:azzeddine.talha.me@gmail.com?subject=Hello%20Azzeddine">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
-          Contact me by email
-        </a>
-      </div>
-    </section>
-  </main>
+        function sendMail() {
+            var parms = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                message: document.getElementById("message").value,
+            };
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-top">
-        <a class="footer-brand" href="#top"><strong>Azzeddine <span class="blue">Talha</span></strong><span>Lead Unity Developer · Morocco</span></a>
-        <div class="socials" aria-label="Social links">
-          <a class="social-link" href="https://x.com/TalhaAzzeddine" target="_blank" rel="noopener noreferrer" aria-label="X profile" title="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.8L18.9 2Zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20Z"/></svg></a>
-          <a class="social-link" href="https://www.linkedin.com/in/azzeddine-talha-796a98254/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 2H3.55C2.69 2 2 2.68 2 3.52v16.96c0 .84.69 1.52 1.55 1.52h16.9c.86 0 1.55-.68 1.55-1.52V3.52C22 2.68 21.31 2 20.45 2ZM8 18H5V9h3v9ZM6.5 7.77a1.74 1.74 0 1 1 0-3.48 1.74 1.74 0 0 1 0 3.48ZM19 18h-3v-4.38c0-1.04-.02-2.38-1.45-2.38-1.45 0-1.67 1.13-1.67 2.3V18h-3V9h2.88v1.23h.04c.4-.76 1.38-1.56 2.84-1.56C18.67 8.67 19 10.6 19 13.1V18Z"/></svg></a>
-          <a class="social-link" href="https://store.steampowered.com/app/3005210/The_Saint/" target="_blank" rel="noopener noreferrer" aria-label="Steam game page" title="Steam"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.98 0A12 12 0 0 0 .4 8.9l6.46 2.66a3.37 3.37 0 0 1 1.91-.6l2.87-4.16v-.06a4.45 4.45 0 1 1 4.45 4.45h-.1l-4.1 2.92a3.4 3.4 0 0 1-6.72.87L.55 13.1A12 12 0 1 0 11.98 0Zm-2.2 18.2a2.04 2.04 0 0 0 1.98-1.55l-2.9-1.2a2.04 2.04 0 0 0 .92 2.75Zm6.33-10.78a2.64 2.64 0 1 0 0-5.28 2.64 2.64 0 0 0 0 5.28Z"/></svg></a>
-          <a class="social-link" href="https://play.google.com/store/search?q=azzeddine%20talha&c=apps" target="_blank" rel="noopener noreferrer" aria-label="Google Play games" title="Google Play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.3 2.7c-.2.3-.3.7-.3 1.2v16.2c0 .5.1.9.3 1.2l9-9.3-9-9.3Z" fill="#68d391"/><path d="m14 13.6-2.1 2.2-6.5 6.7c.4.2.9.1 1.4-.2l10.3-5.9-3.1-2.8Z" fill="#60a5fa"/><path d="m17.1 7.6-10.3-5.9c-.5-.3-1-.4-1.4-.2l8.6 8.9 3.1-2.8Z" fill="#fbbf24"/><path d="m21 10.1-3.6-2.1-3.4 3.5 3.4 3.5 3.6-2.1c1.1-.6 1.1-2.2 0-2.8Z" fill="#fb7185"/></svg></a>
-          <a class="social-link" href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub (replace with your profile)" title="GitHub — update profile URL"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.1c-3.1.67-3.75-1.32-3.75-1.32-.5-1.29-1.24-1.63-1.24-1.63-1.01-.69.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15.99 1.7 2.6 1.21 3.23.93.1-.72.39-1.21.7-1.49-2.48-.28-5.09-1.24-5.09-5.52 0-1.22.44-2.21 1.15-2.99-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.05 1.14a10.6 10.6 0 0 1 5.55 0c2.11-1.44 3.05-1.14 3.05-1.14.61 1.54.23 2.68.11 2.96.72.78 1.15 1.77 1.15 2.99 0 4.29-2.61 5.23-5.1 5.51.4.34.75 1 .75 2.02v3c0 .3.2.65.76.54A11.1 11.1 0 0 0 12 .9Z"/></svg></a>
-        </div>
-        <nav class="footer-nav" aria-label="Footer links">
-          <a href="assets/files/Azzeddine_Talha_CV.pdf" download>Download CV</a>
-          <a href="assets/files/Azzeddine_Talha_Portfolio.pdf" target="_blank" rel="noopener noreferrer">Portfolio PDF</a>
-          <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="mailto:azzeddine.talha.me@gmail.com">Contact</a>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <span>© <span id="year">2026</span> Azzeddine Talha. All rights reserved.</span>
-        <span>Designed &amp; built with care for games and interactive experiences.</span>
-        <a class="back-top" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg></a>
-      </div>
-    </div>
-  </footer>
+            const serviceID = "service_xeerk2b"
+            const templeteID = "template_zgskqt5"
 
-  <script>
-    (() => {
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const loader = document.querySelector('#site-loader');
-      const loaderStarted = Date.now();
-      let loaderDismissed = false;
+            emailjs.send(serviceID, templeteID, parms).then(
+                res => {
+                    document.getElementById("name").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("message").value = "";
+                    document.getElementById("messageSend").style.display = "block";
+                }
+            )
+                .catch(
+                    (error) => console.log(error)
+                );
+        }
 
-      const dismissLoader = () => {
-        if (loaderDismissed) return;
-        loaderDismissed = true;
-        const minimumDuration = reduceMotion ? 250 : 1150;
-        const wait = Math.max(0, minimumDuration - (Date.now() - loaderStarted));
-        window.setTimeout(() => {
-          if (loader) loader.classList.add('is-hidden');
-          document.body.classList.remove('is-loading');
-          if (loader) window.setTimeout(() => loader.remove(), 760);
-        }, wait);
-      };
-      if (document.readyState === 'complete') dismissLoader();
-      else window.addEventListener('load', dismissLoader, { once: true });
-      // A fallback prevents a stalled external resource from leaving the loader on screen forever.
-      window.setTimeout(dismissLoader, 6500);
+    </script>
 
-      const menuButton = document.querySelector('.menu-toggle');
-      const nav = document.querySelector('#primary-nav');
-      if (menuButton && nav) {
-        menuButton.addEventListener('click', () => {
-          const isOpen = nav.classList.toggle('is-open');
-          menuButton.setAttribute('aria-expanded', String(isOpen));
-          menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
-        });
-        nav.querySelectorAll('a').forEach((link) => {
-          link.addEventListener('click', () => {
-            nav.classList.remove('is-open');
-            menuButton.setAttribute('aria-expanded', 'false');
-            menuButton.setAttribute('aria-label', 'Open navigation menu');
-          });
-        });
-      }
-
-      // Add animations only when JavaScript is available; content remains visible without it.
-      const revealSelectors = ['.portrait-column', '.hero-copy', '.section-head', '.game-card', '.about-copy', '.skills-panel', '.experience-item', '.contact-box'];
-      const revealTargets = revealSelectors.flatMap((selector) => Array.from(document.querySelectorAll(selector)));
-      if (!reduceMotion && 'IntersectionObserver' in window) {
-        document.documentElement.classList.add('motion-ready');
-        revealTargets.forEach((element) => {
-          element.classList.add('reveal');
-          if (element.matches('.portrait-column')) element.classList.add('reveal-left');
-          if (element.matches('.hero-copy')) element.classList.add('reveal-right');
-        });
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.12, rootMargin: '0px 0px -24px 0px' });
-        revealTargets.forEach((element) => revealObserver.observe(element));
-      }
-
-      const year = document.querySelector('#year');
-      if (year) year.textContent = String(new Date().getFullYear());
-    })();
-  </script>
 </body>
+
 </html>
